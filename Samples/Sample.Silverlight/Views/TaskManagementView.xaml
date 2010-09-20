@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="Sample.Silverlight.Views.TaskManagementView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Utility="clr-namespace:Sample.Silverlight.Utility" 
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400" 
+             Loaded="UserControl_Loaded">
+    
+    <UserControl.Resources>
+        <Utility:BooleanToForegroundConverter x:Key="foregroundConverter"/>
+        <Utility:BooleanToVisibilityConverter x:Key="visibilityConverter"/>
+    </UserControl.Resources>
+    
+	<Grid x:Name="LayoutRoot" Width="400" Height="300">
+        
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="282*" />
+                <ColumnDefinition Width="118*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+ 
+            <TextBox Margin="2,2" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=Explicit}" 
+                                  TextChanged="DescriptionTextChanged"/>
+            
+            <Button Grid.Row="0" Grid.Column="1" Content="Create" Margin="2,2" 
+                                 Command="{Binding CreateCommand}"/>
+
+            <ListBox Grid.Row="1" Grid.ColumnSpan="2" Margin="2,2" 
+                     ItemsSource="{Binding Tasks}" 
+                     SelectedItem="{Binding Selected, Mode=TwoWay}">
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                           
+                            <TextBlock Text="{Binding Description}" 
+                                      Foreground="{Binding IsCompleted, Converter={StaticResource foregroundConverter}}"/>
+                            
+                           <Line Stretch="Fill" X2="20" X1="0" StrokeThickness="1" Stroke="Black" 
+                                      Visibility="{Binding IsCompleted, Converter={StaticResource visibilityConverter}}"/>
+                            
+                           <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Foreground="Black" Text="Created: "/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="Bold" 
+                                                   Foreground="Black" Text="{Binding Created}"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Foreground="Black" Text="Completed: "/>
+                                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold" 
+                                                   Foreground="Black" Text="{Binding Completed}"/>
+                                    </Grid>                                  
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Grid.Row="2" Grid.Column="0" Content="Mark Complete" Margin="2,2" 
+                    Command="{Binding MarkCompleteCommand}"/>
+            
+            <Button Grid.Row="2" Grid.Column="1" Content="Delete" Margin="2,2" 
+                    Command="{Binding DeleteCommand}"/>                      
+            
+        </Grid>
+        
+    </Grid>
+    
+</UserControl>
