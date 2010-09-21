@@ -11,8 +11,8 @@ namespace Xtalion.Silverlight.Services
 {
 	public class ServiceQuery<TResult, TService> : ServiceCall<TService>
 	{
-		public ServiceQuery(ServiceChannelFactory<TService> factory, Expression<Func<TService, TResult>> call)
-			: base(factory, (MethodCallExpression) call.Body)
+		public ServiceQuery(ServiceChannelFactory<TService> factory, Expression<Func<TService, TResult>> expression)
+			: base(factory, (MethodCallExpression) expression.Body)
 		{}
 
 		public TResult Result

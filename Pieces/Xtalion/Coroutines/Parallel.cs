@@ -4,7 +4,6 @@
 
 #endregion
 
-using System;
 using System.Threading;
 
 namespace Xtalion.Coroutines
@@ -16,10 +15,8 @@ namespace Xtalion.Coroutines
 			return new ParallelAction(actions);
 		}
 
-		private class ParallelAction : IAction
+		private class ParallelAction : DispatchAction
 		{
-			public event EventHandler Completed;
-
 			readonly IAction[] actions;
 			int remaining;
 
@@ -28,7 +25,7 @@ namespace Xtalion.Coroutines
 				this.actions = actions;
 			}
 
-			public void Execute()
+			public override void Execute()
 			{
 				remaining = actions.Length;
 
@@ -42,14 +39,6 @@ namespace Xtalion.Coroutines
 
 					action.Execute();
 				}
-			}
-
-			void SignalCompleted()
-			{
-				EventHandler handler = Completed;
-
-				if (handler != null)
-					Dispatcher.Current.Invoke(() => handler(this, EventArgs.Empty));
 			}
 		}
 	}

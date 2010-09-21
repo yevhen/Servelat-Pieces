@@ -19,14 +19,14 @@ namespace Xtalion.Silverlight.Services
 			factory = new ServiceChannelFactory<TService>(new EndpointAddress(address));
 		}
 
-		public ServiceCommand<TService> Command(Expression<Action<TService>> call)
+		public ServiceCommand<TService> Command(Expression<Action<TService>> expression)
 		{
-			return new ServiceCommand<TService>(factory, call);
+			return new ServiceCommand<TService>(factory, expression);
 		}
 
-		public ServiceQuery<TResponse, TService> Query<TResponse>(Expression<Func<TService, TResponse>> call)
+		public ServiceQuery<TResponse, TService> Query<TResponse>(Expression<Func<TService, TResponse>> expression)
 		{
-			return new ServiceQuery<TResponse, TService>(factory, call);
+			return new ServiceQuery<TResponse, TService>(factory, expression);
 		}
 	}
 }

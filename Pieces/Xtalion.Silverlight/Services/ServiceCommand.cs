@@ -11,8 +11,8 @@ namespace Xtalion.Silverlight.Services
 {
 	public class ServiceCommand<TService> : ServiceCall<TService>
 	{
-		public ServiceCommand(ServiceChannelFactory<TService> factory, Expression<Action<TService>> call)
-			: base(factory, (MethodCallExpression) call.Body)
+		public ServiceCommand(ServiceChannelFactory<TService> factory, Expression<Action<TService>> expression)
+			: base(factory, (MethodCallExpression) expression.Body)
 		{}
 
 		protected override void HandleResult(object result)

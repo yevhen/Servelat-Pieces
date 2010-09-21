@@ -16,12 +16,10 @@ namespace Xtalion.Coroutines
 			return new SleepAction(timeout);
 		}
 
-		private class SleepAction : IAction
+		private class SleepAction : DispatchAction
 		{
 			readonly TimeSpan timeout;
 			readonly Timer timer;
-
-			public event EventHandler Completed;
 
 			public SleepAction(TimeSpan timeout)
 			{
@@ -29,7 +27,7 @@ namespace Xtalion.Coroutines
 				timer = new Timer(OnTimeout);
 			}
 
-			public void Execute()
+			public override void Execute()
 			{
 				timer.Change(timeout, TimeSpan.FromMilliseconds(-1));
 			}
@@ -38,14 +36,6 @@ namespace Xtalion.Coroutines
 			{
 				timer.Dispose();
 				SignalCompleted();
-			}
-
-			void SignalCompleted()
-			{
-				EventHandler handler = Completed;
-
-				if (handler != null)
-					Dispatcher.Current.Invoke(() => handler(this, EventArgs.Empty));
 			}
 		}
 	}

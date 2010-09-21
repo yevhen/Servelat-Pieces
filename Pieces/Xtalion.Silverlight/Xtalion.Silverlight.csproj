@@ -57,11 +57,26 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Xtalion\Async\AsyncCall.cs">
+      <Link>Async\AsyncCall.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\AsyncCommand.cs">
+      <Link>Async\AsyncCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\AsyncQuery.cs">
+      <Link>Async\AsyncQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Coroutines\DispatchAction.cs">
+      <Link>Coroutines\DispatchAction.cs</Link>
+    </Compile>
     <Compile Include="..\Xtalion\Coroutines\Dispatcher.cs">
       <Link>Coroutines\Dispatcher.cs</Link>
     </Compile>
     <Compile Include="..\Xtalion\Coroutines\IAction.cs">
       <Link>Coroutines\IAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Coroutines\ImmediateAction.cs">
+      <Link>Coroutines\ImmediateAction.cs</Link>
     </Compile>
     <Compile Include="..\Xtalion\Coroutines\Parallel.cs">
       <Link>Coroutines\Parallel.cs</Link>
@@ -78,7 +93,7 @@
     <Compile Include="Foundation\ViewModelCommandBuilder.cs" />
     <Compile Include="Foundation\ViewModelServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Coroutines\MainThreadDispatcher.cs" />
+    <Compile Include="Foundation\MainThreadDispatcher.cs" />
     <Compile Include="Services\AsyncServiceInterfaceFactory.cs" />
     <Compile Include="Services\AsyncServiceInterfaceGenerator.cs" />
     <Compile Include="Services\ServiceCall.cs" />

@@ -40,13 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\AsyncCall.cs" />
+    <Compile Include="Async\AsyncCommand.cs" />
+    <Compile Include="Async\AsyncQuery.cs" />
+    <Compile Include="Coroutines\DispatchAction.cs" />
     <Compile Include="Coroutines\Dispatcher.cs" />
     <Compile Include="Coroutines\IAction.cs" />
+    <Compile Include="Coroutines\ImmediateAction.cs" />
     <Compile Include="Coroutines\Parallel.cs" />
     <Compile Include="Coroutines\Run.cs" />
     <Compile Include="Coroutines\Sleep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

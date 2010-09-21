@@ -9,37 +9,24 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using Xtalion.Coroutines;
-using Xtalion.Silverlight;
+using Xtalion.Async;
 
 namespace Xtalion.Silverlight.Services
 {
-	public abstract class ServiceCall<TService> : IAction
+	public abstract class ServiceCall<TService> : AsyncCall
 	{
-		public event EventHandler Completed;
-
 		readonly ServiceChannelFactory<TService> factory;
-		readonly MethodCallExpression call;
+		readonly MethodCallExpression expression;
 
 		object channel;
 
-		protected ServiceCall(ServiceChannelFactory<TService> factory, MethodCallExpression call)
+		protected ServiceCall(ServiceChannelFactory<TService> factory, MethodCallExpression expression)
 		{
 			this.factory = factory;
-			this.call = call;
+			this.expression = expression;
 		}
 		
-		public bool Failed
-		{
-			get { return Exception != null; }
-		}
-
-		public Exception Exception
-		{
-			get; private set;
-		}
-
-		public void Execute()
+		public override void Execute()
 		{
 			channel = factory.CreateChannel();
 			object[] parameters = BuildParameters();
@@ -50,12 +37,12 @@ namespace Xtalion.Silverlight.Services
 
 		MethodInfo GetBeginMethod()
 		{
-			return GetMethod("Begin" + call.Method.Name);
+			return GetMethod("Begin" + expression.Method.Name);
 		}
 
 		MethodInfo GetEndMethod()
 		{
-			return GetMethod("End" + call.Method.Name);
+			return GetMethod("End" + expression.Method.Name);
 		}
 
 		MethodInfo GetMethod(string methodName)
@@ -67,7 +54,7 @@ namespace Xtalion.Silverlight.Services
 		{
 			var parameters = new List<object>();
 
-			foreach (Expression argument in call.Arguments)
+			foreach (Expression argument in expression.Arguments)
 			{
 				object parameter = Expression.Lambda(argument).Compile().DynamicInvoke();
 				parameters.Add(parameter);
@@ -92,14 +79,6 @@ namespace Xtalion.Silverlight.Services
 			}
 
 			SignalCompleted();
-		}
-
-		void SignalCompleted()
-		{
-			EventHandler handler = Completed;
-
-			if (handler != null)
-				Call.OnUIThread(() => handler(this, EventArgs.Empty));			
 		}
 
 		protected abstract void HandleResult(object result);

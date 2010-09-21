@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Xtalion.Coroutines;
-using Xtalion.Silverlight;
 
 namespace Xtalion.Silverlight
 {
