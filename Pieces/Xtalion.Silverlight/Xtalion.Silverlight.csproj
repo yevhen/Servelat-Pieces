@@ -66,6 +66,27 @@
     <Compile Include="..\Xtalion\Async\AsyncQuery.cs">
       <Link>Async\AsyncQuery.cs</Link>
     </Compile>
+    <Compile Include="..\Xtalion\Async\Custom\CallConductor.cs">
+      <Link>Async\Custom\CallConductor.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\Custom\CustomCommand.cs">
+      <Link>Async\Custom\CustomCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\Custom\CustomQuery.cs">
+      <Link>Async\Custom\CustomQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\Execution\ApmExecutionMethod.cs">
+      <Link>Async\Execution\ApmExecutionMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\Execution\ApmInvocation.cs">
+      <Link>Async\Execution\ApmInvocation.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\Execution\ExecutionMethod.cs">
+      <Link>Async\Execution\ExecutionMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\Execution\WorkItemExecutionMethod.cs">
+      <Link>Async\Execution\WorkItemExecutionMethod.cs</Link>
+    </Compile>
     <Compile Include="..\Xtalion\Coroutines\DispatchAction.cs">
       <Link>Coroutines\DispatchAction.cs</Link>
     </Compile>
@@ -96,7 +117,6 @@
     <Compile Include="Foundation\MainThreadDispatcher.cs" />
     <Compile Include="Services\AsyncServiceInterfaceFactory.cs" />
     <Compile Include="Services\AsyncServiceInterfaceGenerator.cs" />
-    <Compile Include="Services\ServiceCall.cs" />
     <Compile Include="Services\ServiceCallBuilder.cs" />
     <Compile Include="Services\ServiceChannelFactory.cs" />
     <Compile Include="Services\ServiceCommand.cs" />

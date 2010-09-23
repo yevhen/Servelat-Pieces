@@ -7,22 +7,32 @@
 using System;
 using System.Linq.Expressions;
 
+using Xtalion.Async;
+using Xtalion.Async.Execution;
+
 namespace Xtalion.Silverlight.Services
 {
-	public class ServiceQuery<TResult, TService> : ServiceCall<TService>
+	public class ServiceQuery<TService, TResult> : AsyncCall<TResult>
 	{
-		public ServiceQuery(ServiceChannelFactory<TService> factory, Expression<Func<TService, TResult>> expression)
-			: base(factory, (MethodCallExpression) expression.Body)
-		{}
+		readonly ApmInvocation invocation;
 
-		public TResult Result
+		public ServiceQuery(ServiceChannelFactory<TService> factory, Expression<Func<TService, TResult>> expression)
 		{
-			get; private set;
+			invocation = new ApmInvocation(factory.CreateChannel(), (MethodCallExpression)expression.Body)
+			{
+				End = (sender, args) =>
+				{
+					Result = (TResult) invocation.Result;
+					Exception = invocation.Exception;
+
+					SignalCompleted();
+				}
+			};
 		}
 
-		protected override void HandleResult(object result)
+		public override void Execute()
 		{
-			Result = (TResult) result;
+			invocation.Invoke();
 		}
 	}
 }

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3F8D1230-2F51-49D3-8350-A4184A2AE107}</ProjectGuid>
+    <ProjectGuid>{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xtalion</RootNamespace>
-    <AssemblyName>Xtalion.Common</AssemblyName>
+    <AssemblyName>Xtalion.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\Tools\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,24 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Async\Execution\ApmInvocation.cs" />
-    <Compile Include="Async\AsyncCall.cs" />
-    <Compile Include="Async\AsyncCommand.cs" />
-    <Compile Include="Async\AsyncQuery.cs" />
-    <Compile Include="Async\Custom\CallConductor.cs" />
-    <Compile Include="Async\Custom\CustomCommand.cs" />
-    <Compile Include="Async\Custom\CustomQuery.cs" />
-    <Compile Include="Async\Execution\ApmExecutionMethod.cs" />
-    <Compile Include="Async\Execution\ExecutionMethod.cs" />
-    <Compile Include="Async\Execution\WorkItemExecutionMethod.cs" />
-    <Compile Include="Coroutines\DispatchAction.cs" />
-    <Compile Include="Coroutines\Dispatcher.cs" />
-    <Compile Include="Coroutines\IAction.cs" />
-    <Compile Include="Coroutines\ImmediateAction.cs" />
-    <Compile Include="Coroutines\Parallel.cs" />
-    <Compile Include="Coroutines\Run.cs" />
-    <Compile Include="Coroutines\Sleep.cs" />
+    <Compile Include="Async\Execution\ApmExecutionMethodFixture.cs" />
+    <Compile Include="Async\Execution\ExecutionMethodFixtureBase.cs" />
+    <Compile Include="Async\Execution\WorkItemExecutionMethodFixture.cs" />
+    <Compile Include="Async\PerformanceFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xtalion\Xtalion.csproj">
+      <Project>{3F8D1230-2F51-49D3-8350-A4184A2AE107}</Project>
+      <Name>Xtalion</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

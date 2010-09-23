@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xtalion.Silverlight.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Desktop", "Samples\Sample.Desktop\Sample.Desktop.csproj", "{F660B943-1FCD-4C23-BBE5-39BC6B8B1BD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xtalion.Tests", "Pieces\Xtalion.Tests\Xtalion.Tests.csproj", "{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,16 @@ Global
 		{F660B943-1FCD-4C23-BBE5-39BC6B8B1BD9}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F660B943-1FCD-4C23-BBE5-39BC6B8B1BD9}.Release|x86.ActiveCfg = Release|x86
 		{F660B943-1FCD-4C23-BBE5-39BC6B8B1BD9}.Release|x86.Build.0 = Release|x86
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4FEFF7AF-A797-4FF5-8594-1052CD8FAA65}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,35 +1,24 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Threading;
+
+using Xtalion.Async.Execution;
 
 namespace Xtalion.Async
 {
 	public class AsyncCommand : AsyncCall
 	{
-		readonly Action call;
+		readonly ExecutionMethod method;
 
-		public AsyncCommand(Expression<Action> expression)
+		public AsyncCommand(Expression<Action> expression, bool apm = false)
 		{
-			call = expression.Compile();
+			method = apm 
+				? ExecutionMethod.UseApmMethodPair(this, expression) 
+				: ExecutionMethod.QueueUserWorkItem(this, expression);
 		}
 
 		public override void Execute()
 		{
-			ThreadPool.QueueUserWorkItem(ExecuteCall, null);
-		}
-
-		void ExecuteCall(object state)
-		{
-			try
-			{
-				call();
-			}
-			catch (Exception exc)
-			{
-				Exception = exc;
-			}
-
-			SignalCompleted();
+			method.Execute();
 		}
 	}
 }

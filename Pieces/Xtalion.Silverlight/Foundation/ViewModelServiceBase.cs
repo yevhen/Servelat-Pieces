@@ -19,7 +19,7 @@ namespace Xtalion.Silverlight
 			return build.Command(call);
 		}
 
-		protected ServiceQuery<TResponse, TService> Query<TResponse>(Expression<Func<TService, TResponse>> call)
+		protected ServiceQuery<TService, TResponse> Query<TResponse>(Expression<Func<TService, TResponse>> call)
 		{
 			return build.Query(call);
 		}

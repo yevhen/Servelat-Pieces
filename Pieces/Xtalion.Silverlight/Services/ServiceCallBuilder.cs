@@ -24,9 +24,9 @@ namespace Xtalion.Silverlight.Services
 			return new ServiceCommand<TService>(factory, expression);
 		}
 
-		public ServiceQuery<TResponse, TService> Query<TResponse>(Expression<Func<TService, TResponse>> expression)
+		public ServiceQuery<TService, TResponse> Query<TResponse>(Expression<Func<TService, TResponse>> expression)
 		{
-			return new ServiceQuery<TResponse, TService>(factory, expression);
+			return new ServiceQuery<TService, TResponse>(factory, expression);
 		}
 	}
 }

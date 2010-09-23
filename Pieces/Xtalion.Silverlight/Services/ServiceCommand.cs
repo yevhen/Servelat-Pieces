@@ -7,17 +7,30 @@
 using System;
 using System.Linq.Expressions;
 
+using Xtalion.Async;
+using Xtalion.Async.Execution;
+
 namespace Xtalion.Silverlight.Services
 {
-	public class ServiceCommand<TService> : ServiceCall<TService>
+	public class ServiceCommand<TService> : AsyncCall
 	{
-		public ServiceCommand(ServiceChannelFactory<TService> factory, Expression<Action<TService>> expression)
-			: base(factory, (MethodCallExpression) expression.Body)
-		{}
+		readonly ApmInvocation invocation;
 
-		protected override void HandleResult(object result)
+		public ServiceCommand(ServiceChannelFactory<TService> factory, Expression<Action<TService>> expression)
 		{
-			// do nothing - commands are void
+			invocation = new ApmInvocation(factory.CreateChannel(), (MethodCallExpression) expression.Body)
+			{
+				End = (sender, args) =>
+				{
+					Exception = invocation.Exception;
+					SignalCompleted();
+				}
+			};
+		}
+		
+		public override void Execute()
+		{
+			invocation.Invoke();
 		}
 	}
 }

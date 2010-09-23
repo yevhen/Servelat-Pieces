@@ -13,7 +13,15 @@ namespace Xtalion.Async
 
 		public Exception Exception
 		{
-			get; protected set;
+			get; protected internal set;
+		}
+	}
+
+	public abstract class AsyncCall<TResult> : AsyncCall
+	{
+		public TResult Result
+		{
+			get; protected internal set;
 		}
 	}
 }

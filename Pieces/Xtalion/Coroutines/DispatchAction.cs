@@ -6,7 +6,7 @@ namespace Xtalion.Coroutines
 	{
 		public event EventHandler Completed;
 
-		protected void SignalCompleted()
+		protected internal void SignalCompleted()
 		{
 			EventHandler handler = Completed;
 
