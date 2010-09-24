@@ -19,9 +19,18 @@ namespace Xtalion.Async
 
 	public abstract class AsyncCall<TResult> : AsyncCall
 	{
+		TResult result;
+
 		public TResult Result
 		{
-			get; protected internal set;
+			get
+			{
+				if (Failed)
+					throw new InvalidOperationException("Action failed. Check failure before getting result");
+
+				return result;
+			}
+			protected internal set { result = value; }
 		}
 	}
 }

@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Xtalion.Async.Execution
 {
-	internal class ApmInvocation
+	class ApmInvocation
 	{
 		public EventHandler End;
 

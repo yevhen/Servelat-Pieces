@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Xtalion.Async.Execution
 {
-	internal abstract class WorkItemExecutionMethodBase : ExecutionMethod
+	abstract class WorkItemExecutionMethodBase : ExecutionMethod
 	{
 		readonly AsyncCall owner;
 

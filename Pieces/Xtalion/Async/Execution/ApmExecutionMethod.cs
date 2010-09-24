@@ -2,7 +2,7 @@
 
 namespace Xtalion.Async.Execution
 {
-	internal class ApmExecutionMethod : ExecutionMethod
+	class ApmExecutionMethod : ExecutionMethod
 	{
 		readonly ApmInvocation invocation;
 

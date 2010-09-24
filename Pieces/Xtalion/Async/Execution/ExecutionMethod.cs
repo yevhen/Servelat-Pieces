@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Xtalion.Async.Execution
 {
-	internal abstract class ExecutionMethod
+	abstract class ExecutionMethod
 	{
 		public abstract void Execute();
 
