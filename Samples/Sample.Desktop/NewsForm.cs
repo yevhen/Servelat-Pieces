@@ -40,7 +40,7 @@ namespace Sample.Desktop
 
 		static IEnumerable<IAction> BackgroundDownload()
 		{
-			var build = new WebClientCallBuilder(null, () => new WebClient());
+			var build = new WebClientCallBuilder(() => new WebClient());
 			var uri = new Uri("http://www.codeproject.com/");
 
 			var query = build.Query(client => client.DownloadString(uri));

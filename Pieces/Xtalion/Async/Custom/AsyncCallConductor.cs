@@ -2,7 +2,7 @@
 
 namespace Xtalion.Async.Custom
 {
-	public abstract class CallConductor
+	public abstract class AsyncCallConductor
 	{
 		public event EventHandler Completed;
 		bool completed;

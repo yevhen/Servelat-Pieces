@@ -3,12 +3,12 @@ using System.Linq.Expressions;
 
 namespace Xtalion.Async.Custom
 {
-	public class CustomQuery<TConductor, TSync, TResult> : AsyncCall<TResult> where TConductor : CallConductor, TSync
+	public class CustomAsyncQuery<TConductor, TSync, TResult> : AsyncCall<TResult> where TConductor : AsyncCallConductor, TSync
 	{
 		readonly TConductor conductor;
 		readonly Expression<Func<TSync, TResult>> expression;
 
-		public CustomQuery(TConductor conductor, Expression<Func<TSync, TResult>> expression)
+		public CustomAsyncQuery(TConductor conductor, Expression<Func<TSync, TResult>> expression)
 		{
 			this.conductor = conductor;
 			this.expression = expression;

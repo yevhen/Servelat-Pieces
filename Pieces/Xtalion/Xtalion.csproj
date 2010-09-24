@@ -44,9 +44,9 @@
     <Compile Include="Async\AsyncCall.cs" />
     <Compile Include="Async\AsyncCommand.cs" />
     <Compile Include="Async\AsyncQuery.cs" />
-    <Compile Include="Async\Custom\CallConductor.cs" />
-    <Compile Include="Async\Custom\CustomCommand.cs" />
-    <Compile Include="Async\Custom\CustomQuery.cs" />
+    <Compile Include="Async\Custom\AsyncCallConductor.cs" />
+    <Compile Include="Async\Custom\CustomAsyncCommand.cs" />
+    <Compile Include="Async\Custom\CustomAsyncQuery.cs" />
     <Compile Include="Async\Execution\ApmExecutionMethod.cs" />
     <Compile Include="Async\Execution\ExecutionMethod.cs" />
     <Compile Include="Async\Execution\WorkItemExecutionMethod.cs" />

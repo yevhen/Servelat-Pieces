@@ -15,27 +15,25 @@ namespace Sample.Desktop
 
 	public class WebClientCallBuilder
 	{
-		readonly IWebClient interfacer;
 		readonly Func<WebClient> implementer;
 
-		public WebClientCallBuilder(IWebClient interfacer, Func<WebClient> implementer)
+		public WebClientCallBuilder(Func<WebClient> implementer)
 		{
-			this.interfacer = interfacer;
 			this.implementer = implementer;
 		}
 
-		public CustomCommand<WebClientConductor, IWebClient> Command(Expression<Action<IWebClient>> expression)
+		public CustomAsyncCommand<WebClientConductor, IWebClient> Command(Expression<Action<IWebClient>> expression)
 		{
-			return new CustomCommand<WebClientConductor, IWebClient>(new WebClientConductor(implementer()), expression);
+			return new CustomAsyncCommand<WebClientConductor, IWebClient>(new WebClientConductor(implementer()), expression);
 		}
 
-		public CustomQuery<WebClientConductor, IWebClient, TResult> Query<TResult>(Expression<Func<IWebClient, TResult>> expression)
+		public CustomAsyncQuery<WebClientConductor, IWebClient, TResult> Query<TResult>(Expression<Func<IWebClient, TResult>> expression)
 		{
-			return new CustomQuery<WebClientConductor, IWebClient, TResult>(new WebClientConductor(implementer()), expression);
+			return new CustomAsyncQuery<WebClientConductor, IWebClient, TResult>(new WebClientConductor(implementer()), expression);
 		}
 	}
 
-	public class WebClientConductor : CallConductor, IWebClient
+	public class WebClientConductor : AsyncCallConductor, IWebClient
 	{
 		readonly WebClient client;
 

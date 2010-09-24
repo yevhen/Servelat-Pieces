@@ -66,14 +66,14 @@
     <Compile Include="..\Xtalion\Async\AsyncQuery.cs">
       <Link>Async\AsyncQuery.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Custom\CallConductor.cs">
-      <Link>Async\Custom\CallConductor.cs</Link>
+    <Compile Include="..\Xtalion\Async\Custom\AsyncCallConductor.cs">
+      <Link>Async\Custom\AsyncCallConductor.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Custom\CustomCommand.cs">
-      <Link>Async\Custom\CustomCommand.cs</Link>
+    <Compile Include="..\Xtalion\Async\Custom\CustomAsyncCommand.cs">
+      <Link>Async\Custom\CustomAsyncCommand.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Custom\CustomQuery.cs">
-      <Link>Async\Custom\CustomQuery.cs</Link>
+    <Compile Include="..\Xtalion\Async\Custom\CustomAsyncQuery.cs">
+      <Link>Async\Custom\CustomAsyncQuery.cs</Link>
     </Compile>
     <Compile Include="..\Xtalion\Async\Execution\ApmExecutionMethod.cs">
       <Link>Async\Execution\ApmExecutionMethod.cs</Link>
