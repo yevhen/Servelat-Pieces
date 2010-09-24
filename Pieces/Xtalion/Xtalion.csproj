@@ -51,7 +51,6 @@
     <Compile Include="Async\Execution\ExecutionMethod.cs" />
     <Compile Include="Async\Execution\WorkItemExecutionMethod.cs" />
     <Compile Include="Coroutines\DispatchAction.cs" />
-    <Compile Include="Coroutines\Dispatcher.cs" />
     <Compile Include="Coroutines\IAction.cs" />
     <Compile Include="Coroutines\ImmediateAction.cs" />
     <Compile Include="Coroutines\Parallel.cs" />

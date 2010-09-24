@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainThreadDispatcher.cs" />
     <Compile Include="NewsFeed.cs" />
     <Compile Include="NewsForm.cs">
       <SubType>Form</SubType>

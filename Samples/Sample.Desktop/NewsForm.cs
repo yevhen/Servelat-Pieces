@@ -16,12 +16,6 @@ namespace Sample.Desktop
 		public NewsForm()
 		{
 			InitializeComponent();
-			InitializeInfrastructure();			
-		}
-
-		static void InitializeInfrastructure()
-		{
-			Dispatcher.Current = new MainThreadDispatcher();
 		}
 
 		private void NewsForm_Load(object sender, EventArgs e)

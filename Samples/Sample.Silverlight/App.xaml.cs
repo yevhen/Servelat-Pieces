@@ -5,9 +5,6 @@ using System.Windows.Browser;
 
 using Sample.Silverlight.Views;
 
-using Xtalion.Coroutines;
-using Xtalion.Silverlight;
-
 namespace Sample.Silverlight
 {
 	public partial class App
@@ -22,7 +19,6 @@ namespace Sample.Silverlight
 
 		private void Application_Startup(object sender, StartupEventArgs e)
 		{
-			Dispatcher.Current = new MainThreadDispatcher();
 			RootVisual = new TaskManagementView();
 		}
 

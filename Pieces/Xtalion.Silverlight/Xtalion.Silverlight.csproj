@@ -90,9 +90,6 @@
     <Compile Include="..\Xtalion\Coroutines\DispatchAction.cs">
       <Link>Coroutines\DispatchAction.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Coroutines\Dispatcher.cs">
-      <Link>Coroutines\Dispatcher.cs</Link>
-    </Compile>
     <Compile Include="..\Xtalion\Coroutines\IAction.cs">
       <Link>Coroutines\IAction.cs</Link>
     </Compile>
@@ -114,7 +111,6 @@
     <Compile Include="Foundation\ViewModelCommandBuilder.cs" />
     <Compile Include="Foundation\ViewModelServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Foundation\MainThreadDispatcher.cs" />
     <Compile Include="Services\AsyncServiceInterfaceFactory.cs" />
     <Compile Include="Services\AsyncServiceInterfaceGenerator.cs" />
     <Compile Include="Services\ServiceCallBuilder.cs" />
