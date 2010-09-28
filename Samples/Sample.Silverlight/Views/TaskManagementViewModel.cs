@@ -112,13 +112,13 @@ namespace Sample.Silverlight.Views
 
 		public IEnumerable<IAction> MarkComplete()
 		{
-			var command = Query(service => service.MarkComplete(Selected.Id));
+			Task task = Selected;
+
+			var command = Query(service => service.MarkComplete(task.Id));
 			yield return command;
 
 			Task updatedTask = command.Result;
-
-			Replace(Selected, updatedTask);
-			Selected = updatedTask;
+			Replace(task, updatedTask);			
 		}
 
 		public bool CanMarkComplete
@@ -136,9 +136,10 @@ namespace Sample.Silverlight.Views
 
 		public IEnumerable<IAction> Delete()
 		{
-			yield return Command(service => service.Delete(Selected.Id));
-			
-			Tasks.Remove(Selected);
+			Task task = Selected;
+
+			yield return Command(service => service.Delete(task.Id));
+			Tasks.Remove(task);
 
 			if (Tasks.Count > 0)
 				Selected = Tasks[0];
