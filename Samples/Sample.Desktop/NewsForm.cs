@@ -19,7 +19,7 @@ namespace Sample.Desktop
 		}
 
 		private void NewsForm_Load(object sender, EventArgs e)
-		{
+		{			
 			Yield.Routine(UpdateNews());
 			Yield.Routine(BackgroundDownload());
 		}
@@ -41,10 +41,10 @@ namespace Sample.Desktop
 		static IEnumerable<IAction> BackgroundDownload()
 		{
 			var build = new WebClientCallBuilder(() => new WebClient());
-			var uri = new Uri("http://www.codeproject.com/");
+			var uri   = new Uri("http://www.codeproject.com/");
 
 			var query = build.Query(client => client.DownloadString(uri));
-			var cmd = build.Command(client => client.DownloadFile(uri, @"C:\Temp\2.html"));
+			var cmd	  = build.Command(client => client.DownloadFile(uri, @"C:\Temp\2.html"));
 
 			yield return Parallel.Actions(query, cmd);
 

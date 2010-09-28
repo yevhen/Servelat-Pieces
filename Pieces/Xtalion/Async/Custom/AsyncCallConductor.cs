@@ -5,7 +5,8 @@ namespace Xtalion.Async.Custom
 	public abstract class AsyncCallConductor
 	{
 		public event EventHandler Completed;
-		bool completed;
+		
+		bool used;
 
 		public Exception Exception
 		{
@@ -19,10 +20,11 @@ namespace Xtalion.Async.Custom
 
 		protected void Complete()
 		{
-			if (completed)
-				throw new InvalidOperationException("An instance of Conductor should only be used on per-call basis");
+			if (used)
+				throw new InvalidOperationException(
+					"An instance of Conductor should only be used on per-call basis");
 
-			completed = true;
+			used = true;
 			EventHandler handler = Completed;
 
 			if (handler != null)

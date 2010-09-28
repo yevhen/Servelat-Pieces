@@ -17,7 +17,7 @@ namespace Sample.Silverlight.Views
 			var viewModel = new TaskManagementViewModel();
 			DataContext = viewModel;
 
-			Run.Sequence(viewModel.Activate());
+			Yield.Routine(viewModel.Activate());
 		}
 
 		private void DescriptionTextChanged(object sender, TextChangedEventArgs e)

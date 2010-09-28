@@ -15,21 +15,21 @@ namespace Sample.Desktop
 
 	public class WebClientCallBuilder
 	{
-		readonly Func<WebClient> implementer;
+		readonly Func<WebClient> factory;
 
-		public WebClientCallBuilder(Func<WebClient> implementer)
+		public WebClientCallBuilder(Func<WebClient> factory)
 		{
-			this.implementer = implementer;
+			this.factory = factory;
 		}
 
 		public CustomAsyncCommand<WebClientConductor, IWebClient> Command(Expression<Action<IWebClient>> expression)
 		{
-			return new CustomAsyncCommand<WebClientConductor, IWebClient>(new WebClientConductor(implementer()), expression);
+			return new CustomAsyncCommand<WebClientConductor, IWebClient>(new WebClientConductor(factory()), expression);
 		}
 
 		public CustomAsyncQuery<WebClientConductor, IWebClient, TResult> Query<TResult>(Expression<Func<IWebClient, TResult>> expression)
 		{
-			return new CustomAsyncQuery<WebClientConductor, IWebClient, TResult>(new WebClientConductor(implementer()), expression);
+			return new CustomAsyncQuery<WebClientConductor, IWebClient, TResult>(new WebClientConductor(factory()), expression);
 		}
 	}
 

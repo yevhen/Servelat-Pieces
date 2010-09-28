@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{F53F7216-37C7-45B3-BED7-7DB8A08D17A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Silverlight", "Samples\Sample.Silverlight\Sample.Silverlight.csproj", "{9FE130EE-EF70-41C0-AC45-4037256752E7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A89C13E1-3BC9-4143-9821-1F6204F16F22} = {A89C13E1-3BC9-4143-9821-1F6204F16F22}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xtalion", "Pieces\Xtalion\Xtalion.csproj", "{3F8D1230-2F51-49D3-8350-A4184A2AE107}"
 EndProject

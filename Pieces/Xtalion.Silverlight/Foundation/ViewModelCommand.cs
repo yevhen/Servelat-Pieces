@@ -57,10 +57,10 @@ namespace Xtalion.Silverlight
 
 		private static void HandleReturnValue(object returnValue)
 		{
-			var sequence = returnValue as IEnumerable<IAction>;
+			var routine = returnValue as IEnumerable<IAction>;
 
-			if (sequence != null)
-				Run.Sequence(sequence);
+			if (routine != null)
+				Yield.Routine((routine));
 		}
 	}
 }

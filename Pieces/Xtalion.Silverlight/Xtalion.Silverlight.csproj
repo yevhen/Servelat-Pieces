@@ -99,11 +99,11 @@
     <Compile Include="..\Xtalion\Coroutines\Parallel.cs">
       <Link>Coroutines\Parallel.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Coroutines\Run.cs">
-      <Link>Coroutines\Run.cs</Link>
-    </Compile>
     <Compile Include="..\Xtalion\Coroutines\Sleep.cs">
       <Link>Coroutines\Sleep.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Coroutines\Yield.cs">
+      <Link>Coroutines\Yield.cs</Link>
     </Compile>
     <Compile Include="Foundation\Call.cs" />
     <Compile Include="Foundation\ViewModelBase.cs" />
