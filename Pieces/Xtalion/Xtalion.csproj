@@ -54,7 +54,7 @@
     <Compile Include="Coroutines\IAction.cs" />
     <Compile Include="Coroutines\ImmediateAction.cs" />
     <Compile Include="Coroutines\Parallel.cs" />
-    <Compile Include="Coroutines\Run.cs" />
+    <Compile Include="Coroutines\Yield.cs" />
     <Compile Include="Coroutines\Sleep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace Sample.Desktop
 {
 	public partial class NewsForm : Form
 	{
-		NewsFeed news = new NewsFeed();
+		readonly NewsFeed news = new NewsFeed();
 
 		public NewsForm()
 		{
@@ -20,8 +20,8 @@ namespace Sample.Desktop
 
 		private void NewsForm_Load(object sender, EventArgs e)
 		{
-			Run.Sequence(UpdateNews());
-			Run.Sequence(BackgroundDownload());
+			Yield.Routine(UpdateNews());
+			Yield.Routine(BackgroundDownload());
 		}
 
 		IEnumerable<IAction> UpdateNews()

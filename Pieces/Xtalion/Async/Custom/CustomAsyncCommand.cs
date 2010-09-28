@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace Xtalion.Async.Custom
 {
 	public class CustomAsyncCommand<TConductor, TSync> : AsyncCall where TConductor : AsyncCallConductor, TSync
 	{
 		readonly TConductor conductor;
-		readonly Expression<Action<TSync>> expression;
+		readonly Action<TSync> call;
 
 		public CustomAsyncCommand(TConductor conductor, Expression<Action<TSync>> expression)
 		{
 			this.conductor = conductor;
-			this.expression = expression;
+			call = expression.Compile();
 		}
 
 		public override void Execute()
 		{
 			conductor.Completed += OnCallCompleted;
-			expression.Compile().Invoke(conductor);
+			ThreadPool.QueueUserWorkItem(x => call.Invoke(conductor), null);
 		}
 
 		void OnCallCompleted(object sender, EventArgs e)

@@ -6,8 +6,18 @@ namespace Xtalion.Coroutines
 	public abstract class DispatchAction : IAction
 	{
 		public event EventHandler Completed;
-		
+
 		readonly SynchronizationContext dispatcher = SynchronizationContext.Current;
+
+		protected DispatchAction()
+		{
+			Dispatch = true;
+		}
+
+		internal bool Dispatch
+		{
+			get; set;
+		}
 
 		protected internal void SignalCompleted()
 		{
@@ -16,7 +26,7 @@ namespace Xtalion.Coroutines
 			if (handler == null)
 				return;
 
-			if (dispatcher == null)
+			if (dispatcher == null || !Dispatch)
 			{
 				handler(this, EventArgs.Empty);
 				return;

@@ -31,14 +31,22 @@ namespace Xtalion.Coroutines
 
 				foreach (IAction action in actions)
 				{
+					SetDispatch(action as DispatchAction);
+
 					action.Completed += delegate
 					{
 						if (Interlocked.Decrement(ref remaining) == 0)
 							SignalCompleted();
 					};
-
+					
 					action.Execute();
 				}
+			}
+
+			void SetDispatch(DispatchAction action)
+			{
+				if (action != null)
+					action.Dispatch = Dispatch;
 			}
 		}
 	}
