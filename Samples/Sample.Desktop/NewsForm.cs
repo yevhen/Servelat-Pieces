@@ -19,9 +19,9 @@ namespace Sample.Desktop
 		}
 
 		private void NewsForm_Load(object sender, EventArgs e)
-		{			
-			Yield.Routine(UpdateNews());
-			Yield.Routine(BackgroundDownload());
+		{
+			Yield.Call(UpdateNews());
+			Yield.Call(BackgroundDownload());
 		}
 
 		IEnumerable<IAction> UpdateNews()

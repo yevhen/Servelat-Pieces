@@ -60,7 +60,7 @@ namespace Xtalion.Silverlight
 			var routine = returnValue as IEnumerable<IAction>;
 
 			if (routine != null)
-				Yield.Routine((routine));
+				Yield.Call((routine));
 		}
 	}
 }
