@@ -57,35 +57,35 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Xtalion\Async\ApmInvocation.cs">
+      <Link>Async\ApmInvocation.cs</Link>
+    </Compile>
     <Compile Include="..\Xtalion\Async\AsyncCall.cs">
       <Link>Async\AsyncCall.cs</Link>
     </Compile>
     <Compile Include="..\Xtalion\Async\AsyncCommand.cs">
       <Link>Async\AsyncCommand.cs</Link>
     </Compile>
+    <Compile Include="..\Xtalion\Async\AsyncPatternCommand.cs">
+      <Link>Async\AsyncPatternCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Xtalion\Async\AsyncPatternQuery.cs">
+      <Link>Async\AsyncPatternQuery.cs</Link>
+    </Compile>
     <Compile Include="..\Xtalion\Async\AsyncQuery.cs">
       <Link>Async\AsyncQuery.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Custom\AsyncCallConductor.cs">
-      <Link>Async\Custom\AsyncCallConductor.cs</Link>
+    <Compile Include="..\Xtalion\Async\CustomAsyncCallConductor.cs">
+      <Link>Async\CustomAsyncCallConductor.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Custom\CustomAsyncCommand.cs">
-      <Link>Async\Custom\CustomAsyncCommand.cs</Link>
+    <Compile Include="..\Xtalion\Async\CustomAsyncCommand.cs">
+      <Link>Async\CustomAsyncCommand.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Custom\CustomAsyncQuery.cs">
-      <Link>Async\Custom\CustomAsyncQuery.cs</Link>
+    <Compile Include="..\Xtalion\Async\CustomAsyncQuery.cs">
+      <Link>Async\CustomAsyncQuery.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\Execution\ApmExecutionMethod.cs">
-      <Link>Async\Execution\ApmExecutionMethod.cs</Link>
-    </Compile>
-    <Compile Include="..\Xtalion\Async\Execution\ApmInvocation.cs">
-      <Link>Async\Execution\ApmInvocation.cs</Link>
-    </Compile>
-    <Compile Include="..\Xtalion\Async\Execution\ExecutionMethod.cs">
-      <Link>Async\Execution\ExecutionMethod.cs</Link>
-    </Compile>
-    <Compile Include="..\Xtalion\Async\Execution\WorkItemExecutionMethod.cs">
-      <Link>Async\Execution\WorkItemExecutionMethod.cs</Link>
+    <Compile Include="..\Xtalion\Async\Extensions.cs">
+      <Link>Async\Extensions.cs</Link>
     </Compile>
     <Compile Include="..\Xtalion\Coroutines\DispatchAction.cs">
       <Link>Coroutines\DispatchAction.cs</Link>

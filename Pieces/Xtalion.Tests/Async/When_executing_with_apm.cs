@@ -3,7 +3,7 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Xtalion.Async.Execution
+namespace Xtalion.Async
 {
 	[Context]
 	public class When_executing_with_apm : ContextSpecification
@@ -11,8 +11,8 @@ namespace Xtalion.Async.Execution
 		const string parameter = "param";
 		const string result = "result";
 
-		AsyncCommand command;
-		AsyncQuery<string> query;
+		AsyncPatternCommand command;
+		AsyncPatternQuery<string> query;
 
 		TestInterface instance;
 		IAsyncResult ar;
@@ -42,8 +42,8 @@ namespace Xtalion.Async.Execution
 
 			instance.Expect(x => x.EndFunction(ar)).Return(result);
 
-			command = new AsyncCommand(() => instance.Method(parameter), true);
-			query = new AsyncQuery<string>(() => instance.Function(parameter), true);
+			command = new AsyncPatternCommand(() => instance.Method(parameter));
+			query = new AsyncPatternQuery<string>(() => instance.Function(parameter));
 		}
 
 		protected override void When()

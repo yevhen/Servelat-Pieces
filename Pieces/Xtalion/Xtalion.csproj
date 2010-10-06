@@ -40,16 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Async\Execution\ApmInvocation.cs" />
+    <Compile Include="Async\ApmInvocation.cs" />
+    <Compile Include="Async\CustomAsyncCallConductor.cs" />
+    <Compile Include="Async\AsyncPatternQuery.cs" />
+    <Compile Include="Async\AsyncPatternCommand.cs" />
+    <Compile Include="Async\CustomAsyncCommand.cs" />
+    <Compile Include="Async\CustomAsyncQuery.cs" />
     <Compile Include="Async\AsyncCall.cs" />
     <Compile Include="Async\AsyncCommand.cs" />
     <Compile Include="Async\AsyncQuery.cs" />
-    <Compile Include="Async\Custom\AsyncCallConductor.cs" />
-    <Compile Include="Async\Custom\CustomAsyncCommand.cs" />
-    <Compile Include="Async\Custom\CustomAsyncQuery.cs" />
-    <Compile Include="Async\Execution\ApmExecutionMethod.cs" />
-    <Compile Include="Async\Execution\ExecutionMethod.cs" />
-    <Compile Include="Async\Execution\WorkItemExecutionMethod.cs" />
+    <Compile Include="Async\Extensions.cs" />
     <Compile Include="Coroutines\DispatchAction.cs" />
     <Compile Include="Coroutines\IAction.cs" />
     <Compile Include="Coroutines\ImmediateAction.cs" />

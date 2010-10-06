@@ -3,7 +3,7 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Xtalion.Async.Execution
+namespace Xtalion.Async
 {
 	[Context]
 	public class When_executing_on_thread_pool : ContextSpecification

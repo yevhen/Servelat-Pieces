@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Xtalion.Async.Custom
+namespace Xtalion.Async
 {
-	public abstract class AsyncCallConductor
+	public abstract class CustomAsyncCallConductor
 	{
 		public event EventHandler Completed;
 		

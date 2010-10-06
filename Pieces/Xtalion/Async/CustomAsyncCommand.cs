@@ -2,14 +2,14 @@
 using System.Linq.Expressions;
 using System.Threading;
 
-namespace Xtalion.Async.Custom
+namespace Xtalion.Async
 {
-	public class CustomAsyncQuery<TConductor, TSync, TResult> : AsyncCall<TResult> where TConductor : AsyncCallConductor, TSync
+	public class CustomAsyncCommand<TConductor, TSync> : AsyncCall where TConductor : CustomAsyncCallConductor, TSync
 	{
 		readonly TConductor conductor;
-		readonly Func<TSync, TResult> call;
+		readonly Action<TSync> call;
 
-		public CustomAsyncQuery(TConductor conductor, Expression<Func<TSync, TResult>> expression)
+		public CustomAsyncCommand(TConductor conductor, Expression<Action<TSync>> expression)
 		{
 			this.conductor = conductor;
 			call = expression.Compile();
@@ -24,8 +24,6 @@ namespace Xtalion.Async.Custom
 		void OnCallCompleted(object sender, EventArgs e)
 		{
 			Exception = conductor.Exception;
-			Result = (TResult) conductor.Result;
-
 			SignalCompleted();
 		}
 	}

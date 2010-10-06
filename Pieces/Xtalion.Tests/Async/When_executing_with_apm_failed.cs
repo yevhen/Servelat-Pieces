@@ -3,15 +3,15 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Xtalion.Async.Execution
+namespace Xtalion.Async
 {
 	[Context]
 	public class When_executing_with_apm_failed : ContextSpecification
 	{
-		ArgumentException exception = new ArgumentException();
+		readonly ArgumentException exception = new ArgumentException();
 
-		AsyncCommand command;
-		AsyncQuery<string> query;
+		AsyncPatternCommand command;
+		AsyncPatternQuery<string> query;
 
 		TestInterface instance;
 
@@ -41,8 +41,8 @@ namespace Xtalion.Async.Execution
 			instance.Expect(x => x.EndFunction(null))
 					.Throw(exception);
 
-			command = new AsyncCommand(() => instance.Method(null), true);
-			query = new AsyncQuery<string>(() => instance.Function(null), true);
+			command = new AsyncPatternCommand(() => instance.Method(null));
+			query = new AsyncPatternQuery<string>(() => instance.Function(null));
 		}
 
 		protected override void When()

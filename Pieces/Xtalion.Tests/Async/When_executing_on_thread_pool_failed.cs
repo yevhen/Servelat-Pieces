@@ -3,12 +3,12 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Xtalion.Async.Execution
+namespace Xtalion.Async
 {
 	[Context]
 	public class When_executing_on_thread_pool_failed : ContextSpecification
 	{
-		ArgumentException exception = new ArgumentException();
+		readonly ArgumentException exception = new ArgumentException();
 
 		AsyncCommand command;
 		AsyncQuery<string> query;
