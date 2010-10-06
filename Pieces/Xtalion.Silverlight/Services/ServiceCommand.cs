@@ -8,7 +8,6 @@ using System;
 using System.Linq.Expressions;
 
 using Xtalion.Async;
-using Xtalion.Async.Execution;
 
 namespace Xtalion.Silverlight.Services
 {

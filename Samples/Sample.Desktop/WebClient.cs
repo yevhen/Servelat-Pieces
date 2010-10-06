@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Net;
 
-using Xtalion.Async.Custom;
+using Xtalion.Async;
 
 namespace Sample.Desktop
 {
@@ -33,7 +33,7 @@ namespace Sample.Desktop
 		}
 	}
 
-	public class WebClientConductor : AsyncCallConductor, IWebClient
+	public class WebClientConductor : CustomAsyncCallConductor, IWebClient
 	{
 		readonly WebClient client;
 

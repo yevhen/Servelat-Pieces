@@ -3,7 +3,7 @@ using System.Threading;
 
 using Xtalion.Coroutines;
 
-namespace Xtalion.Async.Execution
+namespace Xtalion.Async
 {
 	public class ContextSpecification : Specification
 	{

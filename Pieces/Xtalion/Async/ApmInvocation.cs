@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Xtalion.Async.Execution
+namespace Xtalion.Async
 {
 	class ApmInvocation
 	{
@@ -15,10 +15,6 @@ namespace Xtalion.Async.Execution
 		readonly object target;
 		readonly object[] parameters;
 
-		public ApmInvocation(MethodCallExpression expression)
-			: this(GetTarget(expression), expression)
-		{}
-
 		public ApmInvocation(object target, MethodCallExpression expression)
 		{
 			this.target = target;
@@ -29,11 +25,6 @@ namespace Xtalion.Async.Execution
 			parameters	= BuildParameters(expression);
 		}
 		
-		static object GetTarget(MethodCallExpression expression)
-		{
-			return Expression.Lambda(expression.Object).Compile().DynamicInvoke();
-		}
-
 		MethodInfo GetBeginMethod(MethodCallExpression expression)
 		{
 			return GetMethod("Begin", expression.Method.Name);
