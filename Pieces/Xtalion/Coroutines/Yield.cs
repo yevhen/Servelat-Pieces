@@ -1,6 +1,7 @@
 ﻿#region Author
 
 //// Rob Eisenberg, Blue Spire Consulting, Inc 
+//// Yevhen Bobrov, http://blog.xtalion.com 
 
 #endregion
 
@@ -12,13 +13,13 @@ namespace Xtalion.Coroutines
 {
 	public class Yield
 	{
-		readonly ManualResetEvent wait;
+		readonly ActionConductor conductor;
 		readonly IEnumerator<IAction> iterator;
 
-		Yield(IEnumerator<IAction> iterator, ManualResetEvent wait)
+		Yield(IEnumerable<IAction> routine, ActionConductor conductor)
 		{
-			this.iterator = iterator;
-			this.wait = wait;
+			iterator = routine.GetEnumerator();
+			this.conductor = conductor;
 		}
 
 		void Iterate()
@@ -35,45 +36,75 @@ namespace Xtalion.Coroutines
 
 			if (!iterator.MoveNext())
 			{
-				Complete();
+				conductor.Complete();
 				return;
 			}
 
 			IAction next = iterator.Current;
 			next.Completed += ActionCompleted;
 
-			Execute(next);
+			conductor.Execute(next);
 		}
 
-		void Complete()
-		{
-			if (wait != null)
-				wait.Set();
+		public static void Call(IEnumerable<IAction> routine)
+		{		
+			new Yield(routine, ActionConductor.Default).Iterate();
 		}
 
-		void Execute(IAction action)
+		public static void Wait(IEnumerable<IAction> routine)
 		{
-			if (wait != null)
-				DisableDispatch(action as DispatchAction);
-
-			action.Execute();
-		}
-
-		static void DisableDispatch(DispatchAction action)
-		{
-			if (action != null)
-				action.Dispatch = false;
-		}
-
-		public static void Routine(IEnumerable<IAction> routine, bool wait = false)
-		{
-			ManualResetEvent signal = wait ? new ManualResetEvent(false) : null;
-			
-			new Yield(routine.GetEnumerator(), signal).Iterate();
-
-			if (signal != null)
+			using (var wait = new BlockingConductor())
 			{
+				new Yield(routine, wait).Iterate();
+				wait.Begin();
+			}
+		}
+
+		class ActionConductor
+		{
+			public static readonly ActionConductor Default = new ActionConductor();
+
+			public virtual void Execute(IAction action)
+			{
+				action.Execute();
+			}
+
+			public virtual void Begin()
+			{}
+
+			public virtual void Complete()
+			{}
+		}
+
+		class BlockingConductor : ActionConductor, IDisposable
+		{
+			ManualResetEvent signal;
+
+			public override void Execute(IAction action)
+			{
+				DisableDispatch(action as DispatchAction);
+				base.Execute(action);
+			}
+
+			public override void Begin()
+			{
+				signal = new ManualResetEvent(false);
 				signal.WaitOne();
+			}
+
+			public override void Complete()
+			{
+				signal.Set();
+			}
+
+			static void DisableDispatch(DispatchAction action)
+			{
+				if (action != null)
+					action.Dispatch = false;
+			}
+
+			public void Dispose()
+			{
 				signal.Dispose();
 			}
 		}
