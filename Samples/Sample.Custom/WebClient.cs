@@ -2,9 +2,14 @@
 using System.Linq.Expressions;
 using System.Net;
 
-using Xtalion.Async;
+using Sample.Custom.Async;
 
-namespace Sample.Desktop
+/*
+  This kind of code only need to be written once and then reused everywhere
+  You may still benefit from Corotines even if when you have a non std non APM async/prorietary stuff
+ */
+
+namespace Sample.Custom
 {
 	public interface IWebClient
 	{
@@ -13,11 +18,15 @@ namespace Sample.Desktop
 		void DownloadFile(Uri address, string fileName);
 	}
 
-	public class WebClientCallBuilder
+	public class WebClientAsyncCallBuilder
 	{
 		readonly Func<WebClient> factory;
 
-		public WebClientCallBuilder(Func<WebClient> factory)
+		public WebClientAsyncCallBuilder()
+			: this(() => new WebClient())
+		{}
+
+		public WebClientAsyncCallBuilder(Func<WebClient> factory)
 		{
 			this.factory = factory;
 		}

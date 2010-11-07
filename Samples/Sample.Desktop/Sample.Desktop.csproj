@@ -61,7 +61,6 @@
     <Compile Include="Ticker.Designer.cs">
       <DependentUpon>Ticker.cs</DependentUpon>
     </Compile>
-    <Compile Include="WebClient.cs" />
     <EmbeddedResource Include="NewsForm.resx">
       <DependentUpon>NewsForm.cs</DependentUpon>
     </EmbeddedResource>

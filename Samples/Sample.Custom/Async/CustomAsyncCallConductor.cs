@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xtalion.Async
+namespace Sample.Custom.Async
 {
 	public abstract class CustomAsyncCallConductor
 	{

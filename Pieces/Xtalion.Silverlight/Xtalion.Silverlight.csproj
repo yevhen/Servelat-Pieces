@@ -75,15 +75,6 @@
     <Compile Include="..\Xtalion\Async\AsyncQuery.cs">
       <Link>Async\AsyncQuery.cs</Link>
     </Compile>
-    <Compile Include="..\Xtalion\Async\CustomAsyncCallConductor.cs">
-      <Link>Async\CustomAsyncCallConductor.cs</Link>
-    </Compile>
-    <Compile Include="..\Xtalion\Async\CustomAsyncCommand.cs">
-      <Link>Async\CustomAsyncCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\Xtalion\Async\CustomAsyncQuery.cs">
-      <Link>Async\CustomAsyncQuery.cs</Link>
-    </Compile>
     <Compile Include="..\Xtalion\Async\Extensions.cs">
       <Link>Async\Extensions.cs</Link>
     </Compile>
