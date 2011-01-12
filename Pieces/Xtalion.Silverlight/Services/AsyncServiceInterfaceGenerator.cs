@@ -36,12 +36,16 @@ namespace Xtalion.Silverlight.Services
 
 		void DefineAsyncInterfaceType()
 		{
-			string asyncInterfaceName = syncInterface.Namespace + "." + syncInterface.Name + "Async";
+			if (!HasAttribute(syncInterface, typeof(ServiceContractAttribute)))
+				throw new InvalidOperationException("Can't build asynchronous proxy for type without ServiceContract attribute");
 
-			asyncInterface = module.DefineType(asyncInterfaceName,
+			asyncInterface = module.DefineType(syncInterface.Namespace + "." + syncInterface.Name + "Async",
 			                                   TypeAttributes.Public | TypeAttributes.Interface | TypeAttributes.Abstract);
 
-			asyncInterface.SetCustomAttribute(CreateAttribute<ServiceContractAttribute>("Name", syncInterface.Name));
+			var serviceContractAttribute = GetCustomAttribute<ServiceContractAttribute>(syncInterface);
+
+			asyncInterface.SetCustomAttribute(
+				CreateAttribute<ServiceContractAttribute>(new[] { "Name", "Namespace"}, new[] { syncInterface.Name, serviceContractAttribute.Namespace}));
 		}
 
 		void DefineAsyncMethodPairs()
@@ -116,17 +120,30 @@ namespace Xtalion.Silverlight.Services
 			return syncInterface.GetMethods().Where(method => HasAttribute(method, typeof(OperationContractAttribute)));
 		}
 
-		static bool HasAttribute(MethodInfo method, Type attribute)
+		static bool HasAttribute(ICustomAttributeProvider provider, Type attribute)
 		{
-			return method.GetCustomAttributes(attribute, true).Length > 0;
+			return provider.GetCustomAttributes(attribute, true).Length > 0;
+		}
+
+		static TAttribute GetCustomAttribute<TAttribute>(ICustomAttributeProvider provider)
+		{
+			return (TAttribute) provider.GetCustomAttributes(typeof(TAttribute), true)[0];
 		}
 
 		static CustomAttributeBuilder CreateAttribute<TAttribute>(string property, object value) where TAttribute : Attribute
 		{
+			return CreateAttribute<TAttribute>(new[] {property}, new[] {value});
+		}
+
+		static CustomAttributeBuilder CreateAttribute<TAttribute>(string[] properties, object[] values) where TAttribute : Attribute
+		{
+			if (properties.Length != values.Length)
+				throw new ArgumentException("The length of 'properties' and 'values' array parameters should match");
+
 			Type attributeType = typeof(TAttribute);
 
 			return new CustomAttributeBuilder(attributeType.GetConstructor(new Type[0]), new object[0],
-											  new[] { attributeType.GetProperty(property) }, new[] { value });
+											  properties.Select(attributeType.GetProperty).ToArray(), values);
 		}
 	}
 }

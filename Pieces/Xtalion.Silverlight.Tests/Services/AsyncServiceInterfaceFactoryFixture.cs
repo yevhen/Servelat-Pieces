@@ -33,8 +33,11 @@ namespace Xtalion.Silverlight.Services
 		[Test]
 		public void Should_properly_generate_service_contract_attribute()
 		{
-			var attribute = (ServiceContractAttribute) asyncInterface.GetCustomAttributes(typeof(ServiceContractAttribute), true)[0];
-			Assert.That(attribute.Name, Is.EqualTo(syncInterface.Name));
+			var syncAttribute = (ServiceContractAttribute)syncInterface.GetCustomAttributes(typeof(ServiceContractAttribute), true)[0];
+			var asyncAttribute = (ServiceContractAttribute) asyncInterface.GetCustomAttributes(typeof(ServiceContractAttribute), true)[0];
+			
+			Assert.That(asyncAttribute.Name, Is.EqualTo(syncInterface.Name));
+			Assert.That(asyncAttribute.Namespace, Is.EqualTo(syncAttribute.Namespace));
 		}
 
 		[Test]
@@ -148,7 +151,7 @@ namespace Xtalion.Silverlight.Services
 		}
 	}
 
-	[ServiceContract]
+	[ServiceContract(Namespace = "http://somenamespace")]
 	[Whatever]
 	public interface ITestInterface
 	{
