@@ -57,32 +57,37 @@ namespace Xtalion.Silverlight.Services
 			if (knownTypeAttributes.Length == 0) 
 				return;
 
-			foreach (var knownTypes in knownTypeAttributes)
+			foreach (var knownTypeAtt in knownTypeAttributes)
 			{
-				CustomAttributeBuilder knownTypesAttribute = null;
-				if (!string.IsNullOrEmpty(knownTypes.MethodName)
-					&& knownTypes.DeclaringType != null)
-				{
-					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
-						new[] { typeof(string), typeof(Type) },
-						new object[] { knownTypes.MethodName, knownTypes.DeclaringType });
-				}
-				else if (knownTypes.Type != null)
-				{
-					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
-						new[] { typeof(Type) },
-						new object[] { knownTypes.Type });
-				}
-				else if (!string.IsNullOrEmpty(knownTypes.MethodName))
-				{
-					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
-						new[] { typeof(string) },
-						new object[] { knownTypes.MethodName });
-				}
-				if (knownTypesAttribute == null)
-					throw new InvalidOperationException("Could not find matching ConstructorInfo");
-				asyncInterfaceBuilder.SetCustomAttribute(knownTypesAttribute);
+				DefineServiceKnownTypesAttribute(knownTypeAtt, asyncInterfaceBuilder);
 			}
+		}
+
+		private static void DefineServiceKnownTypesAttribute(ServiceKnownTypeAttribute knownTypeSource, TypeBuilder asyncInterfaceBuilder)
+		{
+			CustomAttributeBuilder knownTypesAttribute = null;
+			if (!string.IsNullOrEmpty(knownTypeSource.MethodName)
+			    && knownTypeSource.DeclaringType != null)
+			{
+				knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
+					new[] { typeof(string), typeof(Type) },
+					new object[] { knownTypeSource.MethodName, knownTypeSource.DeclaringType });
+			}
+			else if (knownTypeSource.Type != null)
+			{
+				knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
+					new[] { typeof(Type) },
+					new object[] { knownTypeSource.Type });
+			}
+			else if (!string.IsNullOrEmpty(knownTypeSource.MethodName))
+			{
+				knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
+					new[] { typeof(string) },
+					new object[] { knownTypeSource.MethodName });
+			}
+			if (knownTypesAttribute == null)
+				throw new InvalidOperationException("Could not find matching ConstructorInfo");
+			asyncInterfaceBuilder.SetCustomAttribute(knownTypesAttribute);
 		}
 
 		private void DefineAsyncMethodPairs()

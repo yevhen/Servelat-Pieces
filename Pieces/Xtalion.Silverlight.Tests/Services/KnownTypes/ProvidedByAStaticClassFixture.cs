@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using NUnit.Framework;
 
@@ -36,6 +38,20 @@ namespace Xtalion.Silverlight.Services.KnownTypes
 			Assert.That(asyncAttribute.Type, Is.Null);
 			Assert.That(asyncAttribute.MethodName, Is.EqualTo(syncAttribute.MethodName));
 			Assert.That(asyncAttribute.DeclaringType, Is.EqualTo(syncAttribute.DeclaringType));
+		}
+
+		[Test]
+		public void Should_ensure_that_static_provider_class_with_method_is_reachable()
+		{
+			var asyncAttribute = (ServiceKnownTypeAttribute)asyncInterface.GetCustomAttributes(typeof(ServiceKnownTypeAttribute), true)[0];
+			
+			var methodInfo = asyncAttribute.DeclaringType.GetMethod(asyncAttribute.MethodName);
+			var result = methodInfo.Invoke(null, null);
+			var resultArray = result as Type[];
+			Assert.IsNotNull(resultArray);
+			Assert.That(resultArray.Length, Is.EqualTo(2));
+			Assert.That(resultArray[0], Is.EqualTo(typeof(Dog)));
+			Assert.That(resultArray[1], Is.EqualTo(typeof(Cat)));
 		}
 
 		[ServiceContract]
