@@ -15,10 +15,10 @@ namespace Xtalion.Silverlight.Services
 {
 	public class AsyncServiceInterfaceGenerator
 	{
-		readonly ModuleBuilder module;
-		readonly Type syncInterface;
+		private readonly ModuleBuilder module;
+		private readonly Type syncInterface;
 
-		TypeBuilder asyncInterface;
+		private TypeBuilder asyncInterface;
 
 		public AsyncServiceInterfaceGenerator(ModuleBuilder module, Type syncInterface)
 		{
@@ -34,9 +34,9 @@ namespace Xtalion.Silverlight.Services
 			return asyncInterface.CreateType();
 		}
 
-		void DefineAsyncInterfaceType()
+		private void DefineAsyncInterfaceType()
 		{
-			if (!HasAttribute(syncInterface, typeof(ServiceContractAttribute)))
+			if (!HasAttribute(syncInterface, typeof (ServiceContractAttribute)))
 				throw new InvalidOperationException("Can't build asynchronous proxy for type without ServiceContract attribute");
 
 			asyncInterface = module.DefineType(syncInterface.Namespace + "." + syncInterface.Name + "Async",
@@ -45,10 +45,45 @@ namespace Xtalion.Silverlight.Services
 			var serviceContractAttribute = GetCustomAttribute<ServiceContractAttribute>(syncInterface);
 
 			asyncInterface.SetCustomAttribute(
-				CreateAttribute<ServiceContractAttribute>(new[] { "Name", "Namespace"}, new[] { syncInterface.Name, serviceContractAttribute.Namespace}));
+				CreateAttribute<ServiceContractAttribute>(new[] {"Name", "Namespace"},
+				                                          new[] {syncInterface.Name, serviceContractAttribute.Namespace}));
+
+			DefineOptionalAttributes(asyncInterface);
 		}
 
-		void DefineAsyncMethodPairs()
+		private void DefineOptionalAttributes(TypeBuilder asyncInterfaceBuilder)
+		{
+			var knownTypes = GetCustomAttribute<ServiceKnownTypeAttribute>(syncInterface);
+			if (knownTypes != null)
+			{
+				CustomAttributeBuilder knownTypesAttribute = null;
+				if (!string.IsNullOrEmpty(knownTypes.MethodName)
+				    && knownTypes.DeclaringType != null)
+				{
+					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
+						new[] { typeof(string), typeof(Type) },
+						new object[] { knownTypes.MethodName, knownTypes.DeclaringType });
+				}
+				else if (knownTypes.Type != null)
+				{
+					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
+						new[] { typeof(Type) },
+						new object[] { knownTypes.Type });
+				
+				}
+				else if (!string.IsNullOrEmpty(knownTypes.MethodName))
+				{
+					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
+						new[] {typeof (string)},
+						new object[] {knownTypes.MethodName});
+				}
+				if (knownTypesAttribute == null)
+					throw new InvalidOperationException("Could not find matching ConstructorInfo");
+				asyncInterfaceBuilder.SetCustomAttribute(knownTypesAttribute);
+			}
+		}
+
+		private void DefineAsyncMethodPairs()
 		{
 			foreach (MethodInfo method in GetOperationContractMethods())
 			{
@@ -56,94 +91,114 @@ namespace Xtalion.Silverlight.Services
 			}
 		}
 
-		void DefineAsyncMethodPair(MethodInfo method)
+		private void DefineAsyncMethodPair(MethodInfo method)
 		{
 			DefineBeginMethod(method);
 			DefineEndMethod(method);
 		}
 
-		void DefineBeginMethod(MethodInfo method)
+		private void DefineBeginMethod(MethodInfo method)
 		{
 			List<Type> parameterTypes = CollectParameterTypes(method);
 
-			MethodBuilder methodBuilder = asyncInterface.DefineMethod("Begin" + method.Name, MethodAttributes.Public | MethodAttributes.Abstract | MethodAttributes.Virtual,
-														  typeof(IAsyncResult), parameterTypes.ToArray());
-            DefineParameterNames(method, methodBuilder);
+			MethodBuilder methodBuilder = asyncInterface.DefineMethod("Begin" + method.Name,
+			                                                          MethodAttributes.Public | MethodAttributes.Abstract |
+			                                                          MethodAttributes.Virtual,
+			                                                          typeof (IAsyncResult), parameterTypes.ToArray());
+			DefineParameterNames(method, methodBuilder);
 
 			DefineOperationContractAttribute(methodBuilder);
 			DefineFaultContractAttribute(method, methodBuilder);
 		}
 
-	    static void DefineParameterNames(MethodInfo syncMethod, MethodBuilder asyncMethod)
-	    {
-	        int position = 1;
-	        foreach (ParameterInfo parameter in syncMethod.GetParameters())
-	        {
-	            asyncMethod.DefineParameter(position++, ParameterAttributes.In, parameter.Name);
-	        }
-	    }
+		private static void DefineParameterNames(MethodInfo syncMethod, MethodBuilder asyncMethod)
+		{
+			int position = 1;
+			foreach (ParameterInfo parameter in syncMethod.GetParameters())
+			{
+				asyncMethod.DefineParameter(position++, ParameterAttributes.In, parameter.Name);
+			}
+		}
 
-	    static List<Type> CollectParameterTypes(MethodInfo method)
+		private static List<Type> CollectParameterTypes(MethodInfo method)
 		{
 			return new List<Type>(method.GetParameters().Select(parameter => parameter.ParameterType))
 			{
-				typeof(AsyncCallback), typeof(object)
+				typeof (AsyncCallback),
+				typeof (object)
 			};
 		}
 
-		static void DefineOperationContractAttribute(MethodBuilder methodBuilder)
+		private static void DefineOperationContractAttribute(MethodBuilder methodBuilder)
 		{
 			methodBuilder.SetCustomAttribute(CreateAttribute<OperationContractAttribute>("AsyncPattern", true));
 		}
 
-		static void DefineFaultContractAttribute(MethodInfo method, MethodBuilder methodBuilder)
+		private static void DefineFaultContractAttribute(MethodInfo method, MethodBuilder methodBuilder)
 		{
-			if (!HasAttribute(method, typeof(FaultContractAttribute)))
+			if (!HasAttribute(method, typeof (FaultContractAttribute)))
 				return;
 
-			var faultContract = (FaultContractAttribute)method.GetCustomAttributes(typeof(FaultContractAttribute), true)[0];
+			var faultContract = (FaultContractAttribute) method.GetCustomAttributes(typeof (FaultContractAttribute), true)[0];
 
 			var attributeBulder = new CustomAttributeBuilder(
-				typeof(FaultContractAttribute).GetConstructor(new[] { typeof(Type) }), new object[] { faultContract.DetailType });
+				typeof (FaultContractAttribute).GetConstructor(new[] {typeof (Type)}), new object[] {faultContract.DetailType});
 
 			methodBuilder.SetCustomAttribute(attributeBulder);
 		}
 
-		void DefineEndMethod(MethodInfo method)
+		private void DefineEndMethod(MethodInfo method)
 		{
-			asyncInterface.DefineMethod("End" + method.Name, MethodAttributes.Public | MethodAttributes.Abstract | MethodAttributes.Virtual,
-										method.ReturnType, new[] { typeof(IAsyncResult) });
+			asyncInterface.DefineMethod("End" + method.Name,
+			                            MethodAttributes.Public | MethodAttributes.Abstract | MethodAttributes.Virtual,
+			                            method.ReturnType, new[] {typeof (IAsyncResult)});
 		}
 
-		IEnumerable<MethodInfo> GetOperationContractMethods()
+		private IEnumerable<MethodInfo> GetOperationContractMethods()
 		{
-			return syncInterface.GetMethods().Where(method => HasAttribute(method, typeof(OperationContractAttribute)));
+			return syncInterface.GetMethods().Where(method => HasAttribute(method, typeof (OperationContractAttribute)));
 		}
 
-		static bool HasAttribute(ICustomAttributeProvider provider, Type attribute)
+		private static bool HasAttribute(ICustomAttributeProvider provider, Type attribute)
 		{
 			return provider.GetCustomAttributes(attribute, true).Length > 0;
 		}
 
-		static TAttribute GetCustomAttribute<TAttribute>(ICustomAttributeProvider provider)
+		private static TAttribute GetCustomAttribute<TAttribute>(ICustomAttributeProvider provider)
 		{
-			return (TAttribute) provider.GetCustomAttributes(typeof(TAttribute), true)[0];
+			var customAttributes = provider.GetCustomAttributes(typeof (TAttribute), true);
+			if (customAttributes.Length == 0)
+				return default(TAttribute);
+
+			return (TAttribute) customAttributes[0];
 		}
 
-		static CustomAttributeBuilder CreateAttribute<TAttribute>(string property, object value) where TAttribute : Attribute
+		private static CustomAttributeBuilder CreateAttribute<TAttribute>(string property, object value)
+			where TAttribute : Attribute
 		{
 			return CreateAttribute<TAttribute>(new[] {property}, new[] {value});
 		}
 
-		static CustomAttributeBuilder CreateAttribute<TAttribute>(string[] properties, object[] values) where TAttribute : Attribute
+		private static CustomAttributeBuilder CreateAttribute<TAttribute>(string[] properties, object[] values) where TAttribute : Attribute
 		{
 			if (properties.Length != values.Length)
 				throw new ArgumentException("The length of 'properties' and 'values' array parameters should match");
 
+			Type attributeType = typeof (TAttribute);
+
+			return new CustomAttributeBuilder(attributeType.GetConstructor(new Type[0]), new object[0], properties.Select(attributeType.GetProperty).ToArray(), values);
+		}
+
+		private static CustomAttributeBuilder CreateAttribute<TAttribute>(Type[] constructorTypes,
+																	  object[] constructorArgs)
+		where TAttribute : Attribute
+		{
+			if (constructorTypes.Length != constructorArgs.Length)
+				throw new ArgumentException("The length of 'properties' and 'values' array parameters should match");
+
 			Type attributeType = typeof(TAttribute);
 
-			return new CustomAttributeBuilder(attributeType.GetConstructor(new Type[0]), new object[0],
-											  properties.Select(attributeType.GetProperty).ToArray(), values);
+			return new CustomAttributeBuilder(attributeType.GetConstructor(constructorTypes), constructorArgs);
 		}
 	}
 }
