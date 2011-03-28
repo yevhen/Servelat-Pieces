@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ServiceModel;
 using NUnit.Framework;
 
-namespace Xtalion.Silverlight.Services
+namespace Xtalion.Silverlight.Services.KnownTypes
 {
 	[TestFixture]
-	public class AsyncServiceInterfaceFactoryKnownTypesFixture
+	public class ProvidedByAMethodFixture
 	{
 		Type syncInterface;
 		Type asyncInterface;
@@ -33,47 +32,19 @@ namespace Xtalion.Silverlight.Services
 			var asyncAttribute = (ServiceKnownTypeAttribute)asyncInterface.GetCustomAttributes(typeof(ServiceKnownTypeAttribute), true)[0];
 
 			Assert.That(asyncAttribute.Type, Is.EqualTo(syncAttribute.Type));
+			Assert.That(asyncAttribute.Type, Is.Null);
 			Assert.That(asyncAttribute.MethodName, Is.EqualTo(syncAttribute.MethodName));
+			Assert.That(asyncAttribute.MethodName, Is.EqualTo("GetKnownTypes"));
 			Assert.That(asyncAttribute.DeclaringType, Is.EqualTo(syncAttribute.DeclaringType));
+			Assert.That(asyncAttribute.DeclaringType, Is.Null);
 		}
 
 		[ServiceContract]
-		[ServiceKnownType("GetKnownTypes", typeof(KnownTypesProvider))]
+		[ServiceKnownType("GetKnownTypes")]
 		public interface ITestService
 		{
 			[OperationContract]
-			IEnumerable<Animal> GetAnimals();
-		}
-
-		public class TestService : ITestService
-		{
-			public IEnumerable<Animal> GetAnimals()
-			{
-				return new Animal[] {new Dog(), new Cat()};
-			}
-		}
-
-		public abstract class Animal
-		{
-			public abstract string Name { get; set; }
-		}
-
-		public class Dog : Animal
-		{
-			public override string Name { get; set; }
-		}
-
-		public class Cat : Animal
-		{
-			public override string Name { get; set; }
-		}
-
-		public static class KnownTypesProvider
-		{
-			public static IEnumerable<Type> GetKnownTypes()
-			{
-				return new[] {typeof (Dog), typeof (Cat)};
-			}
+			void NoOp();
 		}
 	}
 }

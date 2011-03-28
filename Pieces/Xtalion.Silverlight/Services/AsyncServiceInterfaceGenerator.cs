@@ -48,17 +48,20 @@ namespace Xtalion.Silverlight.Services
 				CreateAttribute<ServiceContractAttribute>(new[] {"Name", "Namespace"},
 				                                          new[] {syncInterface.Name, serviceContractAttribute.Namespace}));
 
-			DefineOptionalAttributes(asyncInterface);
+			DefineServiceKnownTypesAttributes(asyncInterface);
 		}
 
-		private void DefineOptionalAttributes(TypeBuilder asyncInterfaceBuilder)
+		private void DefineServiceKnownTypesAttributes(TypeBuilder asyncInterfaceBuilder)
 		{
-			var knownTypes = GetCustomAttribute<ServiceKnownTypeAttribute>(syncInterface);
-			if (knownTypes != null)
+			var knownTypeAttributes = (ServiceKnownTypeAttribute[])syncInterface.GetCustomAttributes(typeof(ServiceKnownTypeAttribute), true);
+			if (knownTypeAttributes.Length == 0) 
+				return;
+
+			foreach (var knownTypes in knownTypeAttributes)
 			{
 				CustomAttributeBuilder knownTypesAttribute = null;
 				if (!string.IsNullOrEmpty(knownTypes.MethodName)
-				    && knownTypes.DeclaringType != null)
+					&& knownTypes.DeclaringType != null)
 				{
 					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
 						new[] { typeof(string), typeof(Type) },
@@ -69,13 +72,12 @@ namespace Xtalion.Silverlight.Services
 					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
 						new[] { typeof(Type) },
 						new object[] { knownTypes.Type });
-				
 				}
 				else if (!string.IsNullOrEmpty(knownTypes.MethodName))
 				{
 					knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
-						new[] {typeof (string)},
-						new object[] {knownTypes.MethodName});
+						new[] { typeof(string) },
+						new object[] { knownTypes.MethodName });
 				}
 				if (knownTypesAttribute == null)
 					throw new InvalidOperationException("Could not find matching ConstructorInfo");
@@ -166,11 +168,7 @@ namespace Xtalion.Silverlight.Services
 
 		private static TAttribute GetCustomAttribute<TAttribute>(ICustomAttributeProvider provider)
 		{
-			var customAttributes = provider.GetCustomAttributes(typeof (TAttribute), true);
-			if (customAttributes.Length == 0)
-				return default(TAttribute);
-
-			return (TAttribute) customAttributes[0];
+			return (TAttribute) provider.GetCustomAttributes(typeof(TAttribute), true)[0];
 		}
 
 		private static CustomAttributeBuilder CreateAttribute<TAttribute>(string property, object value)
@@ -184,19 +182,17 @@ namespace Xtalion.Silverlight.Services
 			if (properties.Length != values.Length)
 				throw new ArgumentException("The length of 'properties' and 'values' array parameters should match");
 
-			Type attributeType = typeof (TAttribute);
+			var attributeType = typeof (TAttribute);
 
 			return new CustomAttributeBuilder(attributeType.GetConstructor(new Type[0]), new object[0], properties.Select(attributeType.GetProperty).ToArray(), values);
 		}
 
-		private static CustomAttributeBuilder CreateAttribute<TAttribute>(Type[] constructorTypes,
-																	  object[] constructorArgs)
-		where TAttribute : Attribute
+		private static CustomAttributeBuilder CreateAttribute<TAttribute>(Type[] constructorTypes, object[] constructorArgs) where TAttribute : Attribute
 		{
 			if (constructorTypes.Length != constructorArgs.Length)
 				throw new ArgumentException("The length of 'properties' and 'values' array parameters should match");
 
-			Type attributeType = typeof(TAttribute);
+			var attributeType = typeof(TAttribute);
 
 			return new CustomAttributeBuilder(attributeType.GetConstructor(constructorTypes), constructorArgs);
 		}
