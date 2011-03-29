@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ServiceModel;
 using NUnit.Framework;
 
@@ -43,8 +44,8 @@ namespace Xtalion.Silverlight.Services.KnownTypes
 			var asyncAttributes = (ServiceKnownTypeAttribute[])asyncInterface.GetCustomAttributes(typeof(ServiceKnownTypeAttribute), true);
 
 			Assert.That(asyncAttributes.Length, Is.EqualTo(2));
-			Assert.That(asyncAttributes[0].Type, Is.EqualTo(typeof(Dog)));
-			Assert.That(asyncAttributes[1].Type, Is.EqualTo(typeof(Cat)));
+			Assert.That(asyncAttributes.Any(att => att.Type == typeof(Dog)));
+			Assert.That(asyncAttributes.Any(att => att.Type == typeof(Cat)));
 		}
 
 		[ServiceContract]

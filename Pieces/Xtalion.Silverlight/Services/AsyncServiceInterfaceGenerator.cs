@@ -66,8 +66,8 @@ namespace Xtalion.Silverlight.Services
 		private static void DefineServiceKnownTypesAttribute(ServiceKnownTypeAttribute knownTypeSource, TypeBuilder asyncInterfaceBuilder)
 		{
 			CustomAttributeBuilder knownTypesAttribute = null;
-			if (!string.IsNullOrEmpty(knownTypeSource.MethodName)
-			    && knownTypeSource.DeclaringType != null)
+
+			if (!string.IsNullOrEmpty(knownTypeSource.MethodName) && knownTypeSource.DeclaringType != null)
 			{
 				knownTypesAttribute = CreateAttribute<ServiceKnownTypeAttribute>(
 					new[] { typeof(string), typeof(Type) },
@@ -85,8 +85,10 @@ namespace Xtalion.Silverlight.Services
 					new[] { typeof(string) },
 					new object[] { knownTypeSource.MethodName });
 			}
+
 			if (knownTypesAttribute == null)
 				throw new InvalidOperationException("Could not find matching ConstructorInfo");
+
 			asyncInterfaceBuilder.SetCustomAttribute(knownTypesAttribute);
 		}
 

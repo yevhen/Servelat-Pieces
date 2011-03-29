@@ -44,14 +44,15 @@ namespace Xtalion.Silverlight.Services.KnownTypes
 		public void Should_ensure_that_static_provider_class_with_method_is_reachable()
 		{
 			var asyncAttribute = (ServiceKnownTypeAttribute)asyncInterface.GetCustomAttributes(typeof(ServiceKnownTypeAttribute), true)[0];
-			
-			var methodInfo = asyncAttribute.DeclaringType.GetMethod(asyncAttribute.MethodName);
-			var result = methodInfo.Invoke(null, null);
-			var resultArray = result as Type[];
-			Assert.IsNotNull(resultArray);
-			Assert.That(resultArray.Length, Is.EqualTo(2));
-			Assert.That(resultArray[0], Is.EqualTo(typeof(Dog)));
-			Assert.That(resultArray[1], Is.EqualTo(typeof(Cat)));
+
+			var providerMethod = asyncAttribute.DeclaringType.GetMethod(asyncAttribute.MethodName);
+			var knownTypes = (Type[])providerMethod.Invoke(null, null);
+
+			Assert.That(knownTypes, Is.Not.Null);
+			Assert.That(knownTypes.Length, Is.EqualTo(2));
+
+			Assert.That(knownTypes.Contains(typeof(Dog)));
+			Assert.That(knownTypes.Contains(typeof(Cat)));
 		}
 
 		[ServiceContract]
