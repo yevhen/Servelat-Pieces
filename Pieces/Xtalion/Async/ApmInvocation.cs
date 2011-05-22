@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Xtalion.Async
 {
-	class ApmInvocation
+	class ApmInvocation : Invocation
 	{
-		public EventHandler End;
-
 		readonly MethodInfo beginMethod;
 		readonly MethodInfo endMethod;
 
@@ -42,13 +40,7 @@ namespace Xtalion.Async
 
 		object[] BuildParameters(MethodCallExpression expression)
 		{
-			var result = new List<object>();
-
-			foreach (Expression argument in expression.Arguments)
-			{
-				object parameter = Expression.Lambda(argument).Compile().DynamicInvoke();
-				result.Add(parameter);
-			}
+			var result = EvaluateParameters(expression).ToList();
 
 			result.Add(new AsyncCallback(OnInvokeCompleted));
 			result.Add(null);
@@ -56,19 +48,9 @@ namespace Xtalion.Async
 			return result.ToArray();
 		}
 
-		public void Invoke()
+		public override void Invoke()
 		{
 			beginMethod.Invoke(target, parameters);
-		}
-
-		public Exception Exception 
-		{ 
-			get; private set; 
-		}
-
-		public object Result
-		{
-			get; private set;
 		}
 
 		void OnInvokeCompleted(IAsyncResult ar)
@@ -82,8 +64,8 @@ namespace Xtalion.Async
 				Exception = exc;
 			}
 
-			if (End != null)
-				End(this, EventArgs.Empty);
+			if (Completed != null)
+				Completed(this, EventArgs.Empty);
 		}
 	}
 }

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Xtalion.Async
 {
-	public class AsyncCommand : AsyncCall
+	public sealed class AsyncCommand : AsyncCall
 	{
 		readonly Action call;
 

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Xtalion.Async
 {
-	public class AsyncPatternCommand : AsyncCall
+	public sealed class AsyncPatternCommand : AsyncCall
 	{
 		readonly ApmInvocation invocation;
 
@@ -13,7 +13,7 @@ namespace Xtalion.Async
 
 			invocation = new ApmInvocation(call.GetTarget(), call)
 			{
-				End = (sender, args) =>
+				Completed = (sender, args) =>
 				{
 					Exception = invocation.Exception;
 					SignalCompleted();

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Xtalion.Async
 {
-	public class AsyncQuery<TResult> : AsyncCall<TResult>
+	public sealed class AsyncQuery<TResult> : AsyncCall<TResult>
 	{
 		readonly Func<TResult> call;
 

@@ -14,12 +14,16 @@ namespace Sample.Silverlight.Views
 		Task selected;
 		string description;
 
-		public TaskManagementViewModel() : base(address)
+		public TaskManagementViewModel() 
+			: this(null)
+		{}
+
+		public TaskManagementViewModel(ITaskService instance) : base(instance, address)
 		{
 			InitializeProperties();
 			InitializeCommands();
 		}
-		
+
 		void InitializeProperties()
 		{
 			Tasks = new ObservableCollection<Task>();
@@ -118,7 +122,9 @@ namespace Sample.Silverlight.Views
 			yield return command;
 
 			Task updatedTask = command.Result;
-			Replace(task, updatedTask);			
+			Replace(task, updatedTask);
+			
+			Selected = updatedTask;
 		}
 
 		public bool CanMarkComplete

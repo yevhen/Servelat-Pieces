@@ -1,12 +1,14 @@
 ﻿#region Author
 
 //// Rob Eisenberg, Blue Spire Consulting, Inc 
+//// Yevhen Bobrov, http://blog.xtalion.com 
 
 #endregion
 
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace Xtalion.Silverlight
 {
@@ -14,14 +16,22 @@ namespace Xtalion.Silverlight
 	{
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-		public void NotifyOfPropertyChange(string propertyName)
+		readonly SynchronizationContext dispatcher = SynchronizationContext.Current;
+
+		void NotifyOfPropertyChange(string propertyName)
 		{
-			Call.OnUIThread(() => PropertyChanged(this, new PropertyChangedEventArgs(propertyName)));
+			if (dispatcher != null)
+			{
+				dispatcher.Post(x => RaisePropertyChanged(propertyName), null);
+				return;
+			}
+
+			RaisePropertyChanged(propertyName);
 		}
 
-		public void NotifyOfPropertyChange<TProperty>(Expression<Func<TProperty>> property)
+		protected void NotifyOfPropertyChange<TProperty>(Expression<Func<TProperty>> property)
 		{
-			var lambda = (LambdaExpression) property;
+			var lambda = (LambdaExpression)property;
 
 			MemberExpression memberExpression;
 			if (lambda.Body is UnaryExpression)
@@ -31,10 +41,15 @@ namespace Xtalion.Silverlight
 			}
 			else
 			{
-				memberExpression = (MemberExpression) lambda.Body;
+				memberExpression = (MemberExpression)lambda.Body;
 			}
 
 			NotifyOfPropertyChange(memberExpression.Member.Name);
+		}
+
+		void RaisePropertyChanged(string propertyName)
+		{
+			PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

@@ -46,7 +46,9 @@
     <Compile Include="Async\AsyncCall.cs" />
     <Compile Include="Async\AsyncCommand.cs" />
     <Compile Include="Async\AsyncQuery.cs" />
+    <Compile Include="Async\DirectInvocation.cs" />
     <Compile Include="Async\Extensions.cs" />
+    <Compile Include="Async\Invocation.cs" />
     <Compile Include="Coroutines\DispatchAction.cs" />
     <Compile Include="Coroutines\IAction.cs" />
     <Compile Include="Coroutines\ImmediateAction.cs" />

@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xtalion.Tests", "Pieces\Xta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Custom", "Samples\Sample.Custom\Sample.Custom.csproj", "{181C9467-AB1B-4B11-9D6D-D8AF3852685A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Silverlight.Tests", "Samples\Sample.Silverlight.Tests\Sample.Silverlight.Tests.csproj", "{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,16 @@ Global
 		{181C9467-AB1B-4B11-9D6D-D8AF3852685A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{181C9467-AB1B-4B11-9D6D-D8AF3852685A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{181C9467-AB1B-4B11-9D6D-D8AF3852685A}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +160,7 @@ Global
 		{94D1DD41-2462-4A2D-B07A-0F38081B6416} = {F53F7216-37C7-45B3-BED7-7DB8A08D17A0}
 		{F660B943-1FCD-4C23-BBE5-39BC6B8B1BD9} = {F53F7216-37C7-45B3-BED7-7DB8A08D17A0}
 		{181C9467-AB1B-4B11-9D6D-D8AF3852685A} = {F53F7216-37C7-45B3-BED7-7DB8A08D17A0}
+		{FB9E8F1E-C046-4C82-BD4E-3545CBA62F46} = {F53F7216-37C7-45B3-BED7-7DB8A08D17A0}
 		{A89C13E1-3BC9-4143-9821-1F6204F16F22} = {265F498A-DBEE-49E8-9CEC-E54B1A97E4BE}
 		{E0B83B64-1D35-42B2-9E5E-2E3DF653C1C6} = {265F498A-DBEE-49E8-9CEC-E54B1A97E4BE}
 	EndGlobalSection

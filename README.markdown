@@ -1,2 +1,2 @@
 ![logo!](https://github.com/yevhen/Servelat-Pieces/raw/master/logo.png)
-You can find some project description [here](http://www.codeproject.com/KB/silverlight/FixingAllAsync.aspx).
+You can find some project description [here](http://www.codeproject.com/KB/silverlight/FixingAllAsync.aspx) and [there](http://www.codeproject.com/KB/silverlight/FrictSLUnitTest.aspx).

@@ -11,21 +11,20 @@ using Xtalion.Async;
 
 namespace Xtalion.Silverlight.Services
 {
-	public class ServiceQuery<TService, TResult> : AsyncCall<TResult>
+	public sealed class ServiceQuery<TService, TResult> : AsyncCall<TResult>
 	{
-		readonly ApmInvocation invocation;
+		readonly Invocation invocation;
 
-		public ServiceQuery(ServiceChannelFactory<TService> factory, Expression<Func<TService, TResult>> expression)
+		public ServiceQuery(ServiceChannelFactory<TService> factory, TService instance, Expression<Func<TService, TResult>> expression)
 		{
-			invocation = new ApmInvocation(factory.CreateChannel(), (MethodCallExpression)expression.Body)
+			invocation = ServiceCall<TService>.MakeInvocation(factory, instance, (MethodCallExpression)expression.Body);
+			
+			invocation.Completed = (sender, args) =>
 			{
-				End = (sender, args) =>
-				{
-					Result = (TResult) invocation.Result;
-					Exception = invocation.Exception;
+				Result = (TResult) invocation.Result;
+				Exception = invocation.Exception;
 
-					SignalCompleted();
-				}
+				SignalCompleted();
 			};
 		}
 

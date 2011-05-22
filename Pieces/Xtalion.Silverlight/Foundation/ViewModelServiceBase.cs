@@ -9,9 +9,9 @@ namespace Xtalion.Silverlight
 	{
 		readonly ServiceCallBuilder<TService> build;
 
-		protected ViewModelServiceBase(string address)
+		protected ViewModelServiceBase(TService instance, string address)
 		{
-			build = new ServiceCallBuilder<TService>(address);
+			build = new ServiceCallBuilder<TService>(instance, address);
 		}
 
 		protected ServiceCommand<TService> Command(Expression<Action<TService>> call)
