@@ -6,6 +6,7 @@
 
 using System;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 
 namespace Xtalion.Silverlight.Services
 {
@@ -13,14 +14,19 @@ namespace Xtalion.Silverlight.Services
 	{
 		dynamic channelFactory;
 
-		public ServiceChannelFactory(EndpointAddress address)
+		public ServiceChannelFactory(Binding binding, EndpointAddress address)
 		{
-			BuildChannelFactory(address);
+			BuildChannelFactory(binding, address);
 		}
 
-		void BuildChannelFactory(EndpointAddress address)
+		public ServiceChannelFactory(EndpointAddress address)
 		{
-			channelFactory = Activator.CreateInstance(GetChannelFactoryType(), new BasicHttpBinding(), address);			
+			BuildChannelFactory(new BasicHttpBinding(), address);
+		}
+
+		void BuildChannelFactory(Binding binding, EndpointAddress address)
+		{
+			channelFactory = Activator.CreateInstance(GetChannelFactoryType(), binding, address);			
 		}
 
 		static Type GetChannelFactoryType()
